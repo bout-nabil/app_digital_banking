@@ -12,7 +12,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "TYPE", length = 4)
 @Data @AllArgsConstructor @NoArgsConstructor
-public class BankAccount {
+public abstract class BankAccount {
     @Id
     private String idBankAccount;
     private double balance;
@@ -22,6 +22,6 @@ public class BankAccount {
     private String currency;
     @ManyToOne
     private Customer customer;
-    @OneToMany(mappedBy = "bankAccount")
+    @OneToMany(mappedBy = "bankAccount", fetch = FetchType.EAGER)
     private List<AccountOperation> accountOperationList;
 }
