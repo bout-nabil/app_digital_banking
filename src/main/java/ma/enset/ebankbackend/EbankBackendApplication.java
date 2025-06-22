@@ -63,7 +63,7 @@ public class EbankBackendApplication {
                     accountOperation.setOperationDate(new Date());
                     accountOperation.setAmount(Math.random()*120000);
                     accountOperation.setBankAccount(bankAccount);
-                    bankAccountRepository.save(bankAccount);
+                    accountOperationRepository.save(accountOperation);
                 }
             });
         };
