@@ -1,6 +1,8 @@
 package ma.enset.ebankbackend;
 
 import ma.enset.ebankbackend.Enums.AccountStatus;
+import ma.enset.ebankbackend.Enums.OperationType;
+import ma.enset.ebankbackend.entities.AccountOperation;
 import ma.enset.ebankbackend.entities.CurrentAccount;
 import ma.enset.ebankbackend.entities.Customer;
 import ma.enset.ebankbackend.entities.SavingAccount;
@@ -53,6 +55,16 @@ public class EbankBackendApplication {
                 savingAccount.setCurrency("MAD");
                 savingAccount.setCustomer(customer);
                 bankAccountRepository.save(savingAccount);
+            });
+            bankAccountRepository.findAll().forEach(bankAccount -> {
+                for (int i = 0; i < 10; i++) {
+                    AccountOperation accountOperation = new AccountOperation();
+                    accountOperation.setOperationType(Math.random()>0.5? OperationType.DEBIT:OperationType.CREDIT);
+                    accountOperation.setOperationDate(new Date());
+                    accountOperation.setAmount(Math.random()*120000);
+                    accountOperation.setBankAccount(bankAccount);
+                    bankAccountRepository.save(bankAccount);
+                }
             });
         };
     }
