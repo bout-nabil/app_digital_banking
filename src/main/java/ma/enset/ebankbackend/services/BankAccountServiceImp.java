@@ -11,16 +11,12 @@ import ma.enset.ebankbackend.repositories.AccountOperationRepository;
 import ma.enset.ebankbackend.repositories.BankAccountRepository;
 import ma.enset.ebankbackend.repositories.CustomerRepository;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-
-import static org.slf4j.LoggerFactory.*;
 
 @Service
 @Transactional
@@ -115,8 +111,13 @@ public class BankAccountServiceImp implements IBankAccountService {
     }
 
     @Override
-    public void tranfer(String accountIdSource, String accountIdDestination, double amount) throws BankAccountNotFoundException, BalanceNotSufficientException {
+    public void transfer(String accountIdSource, String accountIdDestination, double amount) throws BankAccountNotFoundException, BalanceNotSufficientException {
         debit(accountIdSource,amount,"Tranfer to " + accountIdDestination);
         credit(accountIdDestination,amount,"Transfer from " + accountIdSource);
+    }
+
+    @Override
+    public List<BankAccount> bankAccountList(){
+        return bankAccountRepository.findAll();
     }
 }
