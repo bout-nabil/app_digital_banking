@@ -9,7 +9,6 @@ import ma.enset.ebankbackend.exceptions.CustomerNotFoundException;
 import ma.enset.ebankbackend.repositories.AccountOperationRepository;
 import ma.enset.ebankbackend.repositories.BankAccountRepository;
 import ma.enset.ebankbackend.repositories.CustomerRepository;
-import ma.enset.ebankbackend.services.BankService;
 import ma.enset.ebankbackend.services.IBankAccountService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
