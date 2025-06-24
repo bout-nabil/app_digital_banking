@@ -1,7 +1,11 @@
 package ma.enset.ebankbackend.mappers;
 
+import ma.enset.ebankbackend.dtos.CurrentBankAccountDTO;
 import ma.enset.ebankbackend.dtos.CustomerDTO;
+import ma.enset.ebankbackend.dtos.SavingBankAccountDTO;
+import ma.enset.ebankbackend.entities.CurrentAccount;
 import ma.enset.ebankbackend.entities.Customer;
+import ma.enset.ebankbackend.entities.SavingAccount;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -21,4 +25,31 @@ public class BankAccountMapperImp {
         return customer;
     }
 
+    public SavingBankAccountDTO fromSavingBankAccount(SavingAccount savingAccount){
+        SavingBankAccountDTO savingBankAccountDTO = new SavingBankAccountDTO();
+        BeanUtils.copyProperties(savingAccount,savingBankAccountDTO);
+        savingBankAccountDTO.setCustomerDTO(fromCustomer(savingAccount.getCustomer()));
+        return savingBankAccountDTO;
+    }
+
+    public SavingAccount fromSavingBankAccountDTO(SavingBankAccountDTO savingBankAccountDTO){
+        SavingAccount savingAccount = new SavingAccount();
+        BeanUtils.copyProperties(savingBankAccountDTO,savingAccount);
+        savingAccount.setCustomer(fromCustomerDTO(savingBankAccountDTO.getCustomerDTO()));
+        return savingAccount;
+    }
+
+    public CurrentBankAccountDTO fromCurrentBankAccount(CurrentAccount currentAccount){
+        CurrentBankAccountDTO currentBankAccountDTO = new CurrentBankAccountDTO();
+        BeanUtils.copyProperties(currentAccount,currentBankAccountDTO);
+        currentBankAccountDTO.setCustomerDTO(fromCustomer(currentAccount.getCustomer()));
+        return currentBankAccountDTO;
+    }
+
+    public CurrentAccount fromCurrentBankAccountDTO(CurrentBankAccountDTO currentBankAccountDTO){
+        CurrentAccount currentAccount = new CurrentAccount();
+        BeanUtils.copyProperties(currentBankAccountDTO,currentAccount);
+        currentAccount.setCustomer(fromCustomerDTO(currentBankAccountDTO.getCustomerDTO()));
+        return currentAccount;
+    }
 }
