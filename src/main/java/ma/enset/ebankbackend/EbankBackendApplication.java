@@ -2,6 +2,7 @@ package ma.enset.ebankbackend;
 
 import ma.enset.ebankbackend.Enums.AccountStatus;
 import ma.enset.ebankbackend.Enums.OperationType;
+import ma.enset.ebankbackend.dtos.CustomerDTO;
 import ma.enset.ebankbackend.entities.*;
 import ma.enset.ebankbackend.exceptions.BalanceNotSufficientException;
 import ma.enset.ebankbackend.exceptions.BankAccountNotFoundException;
@@ -30,10 +31,10 @@ public class EbankBackendApplication {
     CommandLineRunner commandLineRunner(IBankAccountService iBankAccountService){
         return args -> {
             Stream.of("Nabil","Ayoub","Tawfiq").forEach(name->{
-                Customer customer = new Customer();
-                customer.setNameCustomer(name);
-                customer.setEmailCustomer(name+"@gmail.com");
-                iBankAccountService.saveCustomer(customer);
+                CustomerDTO customerDTO = new CustomerDTO();
+                customerDTO.setNameCustomer(name);
+                customerDTO.setEmailCustomer(name+"@gmail.com");
+                iBankAccountService.saveCustomer(customerDTO);
             });
             iBankAccountService.CUSTOMER_LIST().forEach(customer -> {
                 try {
