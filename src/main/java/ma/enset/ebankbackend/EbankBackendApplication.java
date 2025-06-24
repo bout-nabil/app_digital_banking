@@ -2,7 +2,10 @@ package ma.enset.ebankbackend;
 
 import ma.enset.ebankbackend.Enums.AccountStatus;
 import ma.enset.ebankbackend.Enums.OperationType;
+import ma.enset.ebankbackend.dtos.BankAccountDTO;
+import ma.enset.ebankbackend.dtos.CurrentBankAccountDTO;
 import ma.enset.ebankbackend.dtos.CustomerDTO;
+import ma.enset.ebankbackend.dtos.SavingBankAccountDTO;
 import ma.enset.ebankbackend.entities.*;
 import ma.enset.ebankbackend.exceptions.BalanceNotSufficientException;
 import ma.enset.ebankbackend.exceptions.BankAccountNotFoundException;
@@ -40,11 +43,17 @@ public class EbankBackendApplication {
                 try {
                     iBankAccountService.saveCurrentBankAccount(Math.random()*90000, customer.getIdCustomer(), 9000);
                     iBankAccountService.saveSavingBankAccount(Math.random()*120000, customer.getIdCustomer(), 5);
-                    List<BankAccount> bankAccountList = iBankAccountService.bankAccountList();
-                    for (BankAccount bankAccount:bankAccountList) {
+                    List<BankAccountDTO> bankAccountList = iBankAccountService.bankAccountList();
+                    for (BankAccountDTO bankAccount:bankAccountList) {
                         for (int i = 0; i < 10; i++) {
-                            iBankAccountService.credit(bankAccount.getIdBankAccount(), 10000+Math.random()*120000,"Credit");
-                            iBankAccountService.debit(bankAccount.getIdBankAccount(),1000+Math.random()*9000,"Debit");
+                            String accountID;
+                            if(bankAccount instanceof SavingBankAccountDTO){
+                                accountID = ((SavingBankAccountDTO) bankAccount).getIdBankAccount();
+                            } else {
+                                accountID = ((CurrentBankAccountDTO) bankAccount).getIdBankAccount();
+                            }
+                            iBankAccountService.credit(accountID, 10000+Math.random()*120000,"Credit");
+                            iBankAccountService.debit(accountID,1000+Math.random()*9000,"Debit");
                         }
                     }
                 } catch (CustomerNotFoundException | BankAccountNotFoundException | BalanceNotSufficientException e) {
