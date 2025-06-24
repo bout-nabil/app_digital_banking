@@ -1,13 +1,6 @@
 package ma.enset.ebankbackend.services;
 
-import ma.enset.ebankbackend.dtos.BankAccountDTO;
-import ma.enset.ebankbackend.dtos.CurrentBankAccountDTO;
-import ma.enset.ebankbackend.dtos.CustomerDTO;
-import ma.enset.ebankbackend.dtos.SavingBankAccountDTO;
-import ma.enset.ebankbackend.entities.BankAccount;
-import ma.enset.ebankbackend.entities.CurrentAccount;
-import ma.enset.ebankbackend.entities.Customer;
-import ma.enset.ebankbackend.entities.SavingAccount;
+import ma.enset.ebankbackend.dtos.*;
 import ma.enset.ebankbackend.exceptions.BalanceNotSufficientException;
 import ma.enset.ebankbackend.exceptions.BankAccountNotFoundException;
 import ma.enset.ebankbackend.exceptions.CustomerNotFoundException;
@@ -30,4 +23,8 @@ public interface IBankAccountService {
     CustomerDTO updateCustomer(CustomerDTO customerDTO);
 
     void deleteCustomer(Long customerID);
+
+    List<AccountOperationDTO> accountOperationDTOS(String accountID);
+
+    AccountHistoryDTO getAccountHistory(String accountID, int page, int size) throws BankAccountNotFoundException;
 }
