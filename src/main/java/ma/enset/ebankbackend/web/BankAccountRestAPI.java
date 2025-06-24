@@ -1,6 +1,5 @@
 package ma.enset.ebankbackend.web;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ma.enset.ebankbackend.dtos.AccountHistoryDTO;
 import ma.enset.ebankbackend.dtos.AccountOperationDTO;
@@ -44,7 +43,7 @@ public class BankAccountRestAPI {
     public AccountHistoryDTO accountOperationDTOList(
             @PathVariable String accountID,
             @RequestParam(name = "page", defaultValue = "1") int page,
-            @RequestParam(name = "size", defaultValue = "5") int size){
+            @RequestParam(name = "size", defaultValue = "5") int size) throws BankAccountNotFoundException {
         return iBankAccountService.getAccountHistory(accountID,page,size);
     }
 }
